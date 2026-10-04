@@ -1,1 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070411">
+<meta name="description" content="NEXTPLAY — Play free online browser games instantly.">
+<title>NEXTPLAY — Free Online Games</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#05030d;
+  --bg2:#090516;
+  --panel:rgba(17,12,34,.72);
+  --panel2:#120d24;
+  --border:rgba(255,255,255,.09);
+  --text:#fff;
+  --muted:#a7a1bb;
+  --purple:#8b5cf6;
+  --purple2:#6d28d9;
+  --blue:#3b82f6;
+  --pink:#d946ef;
+  --green:#22c55e;
+  --shadow:0 20px 70px rgba(0,0,0,.4);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 10% 0%,rgba(124,58,237,.22),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(59,130,246,.16),transparent 28%),
+    linear-gradient(135deg,#05030d,#090414 45%,#05030d);
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:45px 45px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* NAV */
+
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  border-bottom:1px solid var(--border);
+  background:rgba(5,3,13,.72);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+
+.nav-inner{
+  width:min(1400px,calc(100% - 32px));
+  height:72px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:max-content;
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.logo-mark{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  box-shadow:0 8px 30px rgba(124,58,237,.45);
+  font-size:19px;
+}
+
+.logo span{
+  background:linear-gradient(90deg,#fff,#bba5ff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.search{
+  flex:1;
+  max-width:520px;
+  margin:auto;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  height:43px;
+  padding:0 44px 0 16px;
+  color:white;
+  border:1px solid var(--border);
+  outline:none;
+  border-radius:13px;
+  background:rgba(255,255,255,.055);
+  transition:.2s;
+}
+
+.search input::placeholder{
+  color:#777189;
+}
+
+.search input:focus{
+  border-color:rgba(139,92,246,.7);
+  box-shadow:0 0 0 4px rgba(139,92,246,.1);
+}
+
+.search-icon{
+  position:absolute;
+  right:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#8d869e;
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.nav-btn{
+  border:1px solid var(--border);
+  color:#eee;
+  background:rgba(255,255,255,.055);
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.nav-btn:hover{
+  border-color:rgba(139,92,246,.6);
+  background:rgba(139,92,246,.12);
+}
+
+.google{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.google-icon{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:conic-gradient(#4285f4 0 25%,#34a853 25% 50%,#fbbc05 50% 75%,#ea4335 75%);
+}
+
+/* HERO */
+
+.hero{
+  width:min(1400px,calc(100% - 32px));
+  margin:0 auto;
+  padding:78px 0 45px;
+  display:grid;
+  grid-template-columns:1.35fr .65fr;
+  gap:35px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 13px;
+  border:1px solid rgba(139,92,246,.3);
+  border-radius:999px;
+  color:#c7b4ff;
+  background:rgba(139,92,246,.09);
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:20px;
+}
+
+.badge-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#a78bfa;
+  box-shadow:0 0 15px #8b5cf6;
+}
+
+.hero h1{
+  max-width:850px;
+  font-size:clamp(45px,7vw,86px);
+  line-height:.98;
+  letter-spacing:-5px;
+  font-weight:950;
+}
+
+.hero h1 .gradient{
+  background:linear-gradient(90deg,#fff 0%,#c4b5fd 45%,#60a5fa 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero-text{
+  max-width:700px;
+  margin-top:24px;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.7;
+}
+
+.hero-note{
+  margin-top:22px;
+  max-width:670px;
+  padding:15px 17px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:rgba(255,255,255,.035);
+  color:#c5bed4;
+  line-height:1.55;
+  font-size:13px;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:27px;
+}
+
+.primary{
+  border:0;
+  color:white;
+  padding:13px 21px;
+  border-radius:13px;
+  font-weight:900;
+  background:linear-gradient(135deg,#8b5cf6,#5b21b6);
+  box-shadow:0 12px 35px rgba(109,40,217,.35);
+  transition:.2s;
+}
+
+.primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 45px rgba(109,40,217,.48);
+}
+
+.secondary{
+  border:1px solid var(--border);
+  color:white;
+  padding:13px 21px;
+  border-radius:13px;
+  font-weight:800;
+  background:rgba(255,255,255,.05);
+}
+
+.secondary:hover{
+  background:rgba(255,255,255,.09);
+}
+
+.hero-visual{
+  position:relative;
+  min-height:390px;
+  display:grid;
+  place-items:center;
+}
+
+.orbit{
+  position:absolute;
+  width:330px;
+  height:330px;
+  border-radius:50%;
+  border:1px solid rgba(139,92,246,.18);
+  box-shadow:
+    0 0 100px rgba(124,58,237,.14),
+    inset 0 0 70px rgba(124,58,237,.07);
+  animation:spin 18s linear infinite;
+}
+
+.orbit:before,
+.orbit:after{
+  content:"";
+  position:absolute;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:#8b5cf6;
+  box-shadow:0 0 30px #8b5cf6;
+}
+
+.orbit:before{
+  top:25px;
+  left:70px;
+}
+
+.orbit:after{
+  bottom:38px;
+  right:35px;
+  background:#3b82f6;
+  box-shadow:0 0 30px #3b82f6;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.hero-core{
+  position:relative;
+  width:205px;
+  height:205px;
+  display:grid;
+  place-items:center;
+  border-radius:48px;
+  transform:rotate(-7deg);
+  background:
+    radial-gradient(circle at 30% 20%,rgba(255,255,255,.22),transparent 20%),
+    linear-gradient(145deg,#7c3aed,#2563eb);
+  box-shadow:
+    0 35px 80px rgba(76,29,149,.4),
+    inset 0 1px 1px rgba(255,255,255,.3);
+}
+
+.core-inner{
+  width:145px;
+  height:145px;
+  display:grid;
+  place-items:center;
+  border-radius:35px;
+  background:rgba(5,3,13,.68);
+  border:1px solid rgba(255,255,255,.15);
+  transform:rotate(7deg);
+  font-size:52px;
+  font-weight:1000;
+}
+
+/* STATS */
+
+.stats{
+  width:min(1400px,calc(100% - 32px));
+  margin:0 auto 35px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.stat{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:#928ba3;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:800;
+}
+
+.stat-value{
+  margin-top:8px;
+  font-size:27px;
+  font-weight:950;
+}
+
+/* SECTIONS */
+
+.section{
+  width:min(1400px,calc(100% - 32px));
+  margin:70px auto;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:end;
+  margin-bottom:22px;
+}
+
+.eyebrow{
+  color:#9f7aea;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-weight:900;
+  margin-bottom:7px;
+}
+
+.section-title{
+  font-size:31px;
+  letter-spacing:-1.5px;
+  font-weight:950;
+}
+
+.section-sub{
+  margin-top:7px;
+  color:#8f899d;
+  font-size:14px;
+}
+
+/* FEATURES */
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.feature{
+  min-height:190px;
+  padding:27px;
+  border:1px solid var(--border);
+  border-radius:23px;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(124,58,237,.13),transparent 40%),
+    rgba(255,255,255,.025);
+  position:relative;
+  overflow:hidden;
+}
+
+.feature:after{
+  content:"";
+  position:absolute;
+  width:160px;
+  height:160px;
+  right:-70px;
+  bottom:-90px;
+  border-radius:50%;
+  background:rgba(59,130,246,.12);
+  filter:blur(20px);
+}
+
+.feature-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(59,130,246,.16));
+  border:1px solid rgba(139,92,246,.2);
+  font-weight:950;
+  font-size:18px;
+}
+
+.feature h3{
+  margin-top:18px;
+  font-size:21px;
+}
+
+.feature p{
+  margin-top:9px;
+  color:#938ca2;
+  line-height:1.6;
+  font-size:14px;
+}
+
+/* FILTERS */
+
+.game-toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:13px;
+  margin-bottom:22px;
+}
+
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.tab{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:#aaa3b8;
+  border-radius:11px;
+  padding:9px 14px;
+  font-weight:800;
+  font-size:13px;
+}
+
+.tab.active,
+.tab:hover{
+  color:white;
+  border-color:rgba(139,92,246,.5);
+  background:rgba(139,92,246,.14);
+}
+
+.sort-select{
+  border:1px solid var(--border);
+  background:#100b20;
+  color:#ddd;
+  border-radius:11px;
+  padding:10px 13px;
+  outline:none;
+}
+
+/* GAMES */
+
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:14px;
+}
+
+.game{
+  position:relative;
+  min-width:0;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#0c0817;
+  transition:.25s;
+}
+
+.game:hover{
+  transform:translateY(-5px);
+  border-color:rgba(139,92,246,.42);
+  box-shadow:0 20px 45px rgba(0,0,0,.4);
+}
+
+.game-cover{
+  position:relative;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(139,92,246,.65),transparent 35%),
+    linear-gradient(135deg,#15102a,#090713);
+}
+
+.game-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.4s;
+}
+
+.game:hover .game-cover img{
+  transform:scale(1.06);
+}
+
+.cover-fallback{
+  width:100%;
+  height:100%;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(96,165,250,.5),transparent 30%),
+    radial-gradient(circle at 15% 15%,rgba(168,85,247,.6),transparent 32%),
+    linear-gradient(135deg,#1b103b,#090713);
+}
+
+.cover-letter{
+  position:absolute;
+  top:17px;
+  right:17px;
+  font-size:34px;
+  font-weight:1000;
+  opacity:.16;
+}
+
+.cover-fallback strong{
+  font-size:18px;
+  line-height:1.05;
+}
+
+.cover-fallback small{
+  color:#aaa1bd;
+  margin-top:6px;
+}
+
+.like{
+  position:absolute;
+  right:9px;
+  top:9px;
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
+  color:white;
+  background:rgba(0,0,0,.42);
+  backdrop-filter:blur(8px);
+  z-index:2;
+}
+
+.like.liked{
+  color:#f0abfc;
+  border-color:rgba(217,70,239,.45);
+  background:rgba(217,70,239,.15);
+}
+
+.game-info{
+  padding:13px;
+}
+
+.game-title{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:14px;
+  font-weight:900;
+}
+
+.game-meta{
+  margin-top:7px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  color:#81798f;
+  font-size:11px;
+}
+
+.play-mini{
+  margin-top:12px;
+  width:100%;
+  border:1px solid rgba(139,92,246,.22);
+  border-radius:10px;
+  color:#ddd2ff;
+  background:rgba(139,92,246,.09);
+  padding:8px;
+  font-weight:850;
+  font-size:12px;
+}
+
+.play-mini:hover{
+  background:rgba(139,92,246,.2);
+}
+
+/* LOADING */
+
+.loader{
+  grid-column:1/-1;
+  min-height:230px;
+  display:grid;
+  place-items:center;
+  color:#8d859c;
+}
+
+.spinner{
+  width:35px;
+  height:35px;
+  border:3px solid rgba(255,255,255,.08);
+  border-top-color:#8b5cf6;
+  border-radius:50%;
+  animation:spin2 .8s linear infinite;
+}
+
+@keyframes spin2{
+  to{transform:rotate(360deg)}
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:50px 20px;
+  text-align:center;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:18px;
+  color:#8f899d;
+}
+
+.error-box{
+  grid-column:1/-1;
+  padding:25px;
+  border:1px solid rgba(239,68,68,.2);
+  background:rgba(239,68,68,.05);
+  border-radius:17px;
+  color:#d8cdd8;
+  line-height:1.6;
+}
+
+/* PLAYER */
+
+.player-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:none;
+  background:rgba(0,0,0,.84);
+  backdrop-filter:blur(12px);
+  padding:18px;
+}
+
+.player-overlay.show{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.player-box{
+  width:min(1200px,100%);
+  height:min(820px,94vh);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;
+  background:#07050e;
+  box-shadow:0 40px 100px rgba(0,0,0,.7);
+}
+
+.player-bar{
+  min-height:57px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 13px;
+  border-bottom:1px solid var(--border);
+}
+
+.player-title{
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-weight:900;
+}
+
+.player-actions{
+  display:flex;
+  gap:7px;
+}
+
+.player-btn{
+  border:1px solid var(--border);
+  color:white;
+  background:rgba(255,255,255,.06);
+  border-radius:10px;
+  padding:8px 11px;
+}
+
+.player-frame{
+  flex:1;
+  width:100%;
+  border:0;
+  background:#000;
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:100px;
+  padding:50px 16px 35px;
+  border-top:1px solid var(--border);
+  background:rgba(0,0,0,.18);
+}
+
+.footer-inner{
+  width:min(1400px,100%);
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.footer-brand{
+  font-weight:950;
+  font-size:20px;
+}
+
+.footer-text{
+  margin-top:7px;
+  color:#777081;
+  font-size:13px;
+}
+
+.footer-right{
+  color:#777081;
+  font-size:13px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:2000;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 17px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#130e22;
+  color:white;
+  box-shadow:var(--shadow);
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1150px){
+  .games-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+}
+
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:50px;
+  }
+
+  .hero-visual{
+    min-height:280px;
+  }
+
+  .orbit{
+    width:250px;
+    height:250px;
+  }
+
+  .hero-core{
+    width:155px;
+    height:155px;
+  }
+
+  .core-inner{
+    width:110px;
+    height:110px;
+    font-size:40px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .games-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:680px){
+  .nav-inner{
+    height:auto;
+    min-height:65px;
+    padding:10px 0;
+    flex-wrap:wrap;
+  }
+
+  .search{
+    order:3;
+    flex-basis:100%;
+    max-width:none;
+  }
+
+  .nav-actions .nav-btn:first-child{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:47px;
+    letter-spacing:-3px;
+  }
+
+  .hero-text{
+    font-size:15px;
+  }
+
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .games-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .section-title{
+    font-size:25px;
+  }
+
+  .section-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+  }
+}
+
+@media(max-width:390px){
+  .games-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .game-info{
+    padding:10px;
+  }
+
+  .game-title{
+    font-size:12px;
+  }
+
+  .hero h1{
+    font-size:40px;
+  }
+
+  .stats{
+    gap:8px;
+  }
+
+  .stat{
+    padding:15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="nav-inner">
+
+    <a href="#" class="logo">
+      <div class="logo-mark">N</div>
+      <span>NEXTPLAY</span>
+    </a>
+
+    <div class="search">
+      <input id="searchInput" type="search" placeholder="Search games...">
+      <div class="search-icon">⌕</div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="scrollToGames()">Games</button>
+      <button class="nav-btn google" onclick="googleLogin()">
+        <span class="google-icon"></span>
+        Google Login
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<header class="hero">
+
+  <div>
+    <div class="badge">
+      <span class="badge-dot"></span>
+      NEXTPLAY • Free Browser Games
+    </div>
+
+    <h1>
+      Free Online Games
+      <span class="gradient">No Download</span>
+    </h1>
+
+    <p class="hero-text">
+      Discover hundreds of browser games across action, racing, puzzle,
+      arcade, sports and more. Pick a game and start playing instantly.
+    </p>
+
+    <div class="hero-note">
+      NEXTPLAY is built for fast browser gaming. Your local XP, coins,
+      liked games and recently played games are stored on this device.
+    </div>
+
+    <div class="hero-buttons">
+      <button class="primary" onclick="scrollToGames()">Play Games</button>
+      <button class="secondary" onclick="showLeaderboard()">Leaderboard</button>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="orbit"></div>
+
+    <div class="hero-core">
+      <div class="core-inner">NP</div>
+    </div>
+  </div>
+
+</header>
+
+
+<!-- STATS -->
+<section class="stats">
+
+  <div class="stat">
+    <div class="stat-label">Games</div>
+    <div class="stat-value" id="gameCount">—</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Your XP</div>
+    <div class="stat-value" id="xpValue">0</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Coins</div>
+    <div class="stat-value" id="coinValue">0</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Achievements</div>
+    <div class="stat-value" id="achievementValue">0</div>
+  </div>
+
+</section>
+
+
+<!-- FEATURES -->
+<section class="section">
+
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">NEXTPLAY FEATURES</div>
+      <h2 class="section-title">Built for instant gaming</h2>
+      <p class="section-sub">
+        Everything you need to discover and play browser games.
+      </p>
+    </div>
+  </div>
+
+  <div class="feature-grid">
+
+    <article class="feature">
+      <div class="feature-icon">01</div>
+      <h3>Instant Browser Play</h3>
+      <p>
+        No separate game launcher. Select a game and open it directly
+        inside the NEXTPLAY player.
+      </p>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon">02</div>
+      <h3>Personal Progress</h3>
+      <p>
+        XP, coins, likes and recently played games are remembered locally
+        on your device.
+      </p>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon">03</div>
+      <h3>Smart Discovery</h3>
+      <p>
+        Search games instantly and filter the catalog by categories.
+      </p>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon">04</div>
+      <h3>Responsive Gaming</h3>
+      <p>
+        The interface adapts to phones, tablets, laptops and desktop
+        screens.
+      </p>
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- GAMES -->
+<section class="section" id="gamesSection">
+
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">GAME LIBRARY</div>
+      <h2 class="section-title">Discover Games</h2>
+      <p class="section-sub" id="resultText">
+        Loading the latest games...
+      </p>
+    </div>
+  </div>
+
+  <div class="game-toolbar">
+
+    <div class="tabs">
+      <button class="tab active" data-filter="all">All Games</button>
+      <button class="tab" data-filter="liked">Most Liked</button>
+      <button class="tab" data-filter="recent">Recently Played</button>
+    </div>
+
+    <select class="sort-select" id="sortSelect">
+      <option value="default">Featured</option>
+      <option value="az">A → Z</option>
+      <option value="za">Z → A</option>
+      <option value="likes">Most Liked</option>
+    </select>
+
+  </div>
+
+  <div class="tabs" id="categoryTabs" style="margin-bottom:20px">
+    <button class="tab active" data-category="all">All</button>
+  </div>
+
+  <div class="games-grid" id="gamesGrid">
+    <div class="loader">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+<section class="section" id="leaderboardSection" style="display:none">
+
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">LOCAL LEADERBOARD</div>
+      <h2 class="section-title">Your NEXTPLAY Stats</h2>
+      <p class="section-sub">
+        This demo leaderboard uses progress stored on your device.
+      </p>
+    </div>
+  </div>
+
+  <div class="feature">
+    <h3>Player</h3>
+    <p style="margin-top:12px">
+      NEXTPLAY Player — <strong id="leaderXp">0 XP</strong> —
+      <strong id="leaderCoins">0 Coins</strong>
+    </p>
+  </div>
+
+</section>
+
+
+<!-- PLAYER -->
+<div class="player-overlay" id="playerOverlay">
+
+  <div class="player-box">
+
+    <div class="player-bar">
+
+      <div class="player-title" id="playerTitle">
+        NEXTPLAY Game
+      </div>
+
+      <div class="player-actions">
+        <button class="player-btn" onclick="fullscreenGame()">
+          Fullscreen
+        </button>
+
+        <button class="player-btn" onclick="closePlayer()">
+          Close
+        </button>
+      </div>
+
+    </div>
+
+    <iframe
+      id="gameFrame"
+      class="player-frame"
+      allow="fullscreen; autoplay; gamepad; clipboard-write"
+      allowfullscreen>
+    </iframe>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+
+<!-- FOOTER -->
+<footer>
+
+  <div class="footer-inner">
+
+    <div>
+      <div class="footer-brand">NEXTPLAY</div>
+      <div class="footer-text">
+        Play. Discover. Repeat.
+      </div>
+    </div>
+
+    <div class="footer-right">
+      Free browser gaming platform
+    </div>
+
+  </div>
+
+</footer>
+
+
+<script>
+/* =========================================================
+   NEXTPLAY GAME ENGINE
+   ========================================================= */
+
+const GAMEPIX_FEED =
+  "https://feeds.gamepix.com/v2/xml?sid=L1GCN&pagination=96&page=";
+
+let games = [];
+let filteredGames = [];
+let currentFilter = "all";
+let currentCategory = "all";
+let currentPage = 1;
+let isLoading = false;
+
+const $ = id => document.getElementById(id);
+
+
+/* =========================================================
+   LOCAL PLAYER DATA
+   ========================================================= */
+
+const storage = {
+  get(key, fallback){
+    try{
+      const value = localStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    }catch{
+      return fallback;
+    }
+  },
+
+  set(key,value){
+    try{
+      localStorage.setItem(key,JSON.stringify(value));
+    }catch{}
+  }
+};
+
+let stats = storage.get("nextplay_stats",{
+  xp:0,
+  coins:0
+});
+
+let liked = storage.get("nextplay_liked",[]);
+let recent = storage.get("nextplay_recent",[]);
+
+
+function updateStats(){
+
+  $("xpValue").textContent = stats.xp;
+  $("coinValue").textContent = stats.coins;
+
+  const achievements =
+    Math.floor(stats.xp / 100) +
+    (recent.length >= 5 ? 1 : 0) +
+    (liked.length >= 5 ? 1 : 0);
+
+  $("achievementValue").textContent = achievements;
+
+  $("leaderXp").textContent = stats.xp + " XP";
+  $("leaderCoins").textContent = stats.coins + " Coins";
+
+  storage.set("nextplay_stats",stats);
+}
+
+
+/* =========================================================
+   XML PARSER
+   ========================================================= */
+
+function parseXML(xmlText){
+
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(xmlText,"text/xml");
+
+  if(xml.querySelector("parsererror")){
+    throw new Error("Invalid GamePix XML");
+  }
+
+  const items = [...xml.querySelectorAll("item")];
+
+  return items.map((item,index)=>{
+
+    const read = name => {
+      const node = item.querySelector(name);
+      return node ? node.textContent.trim() : "";
+    };
+
+    const title =
+      read("title") ||
+      "Untitled Game";
+
+    const category =
+      read("category") ||
+      "Arcade";
+
+    const url =
+      read("guid");
+
+    const description =
+      read("description");
+
+    const pubDate =
+      read("pubDate");
+
+    /*
+      Some future GamePix feed versions may expose
+      image fields. We safely check them without depending
+      on them.
+    */
+
+    const image =
+      read("image") ||
+      read("thumbnail") ||
+      read("banner_image") ||
+      read("enclosure");
+
+    return {
+      id:url || ("game-" + index + "-" + title),
+      title,
+      category,
+      url,
+      description,
+      pubDate,
+      image
+    };
+
+  }).filter(game => game.url);
+
+}
+
+
+/* =========================================================
+   LOAD GAMEPIX
+   ========================================================= */
+
+async function loadGames(page=1){
+
+  if(isLoading) return;
+
+  isLoading = true;
+
+  if(page === 1){
+    $("gamesGrid").innerHTML = `
+      <div class="loader">
+        <div class="spinner"></div>
+      </div>
+    `;
+  }
+
+  try{
+
+    const url = GAMEPIX_FEED + page;
+
+    const response = await fetch(url,{
+      method:"GET",
+      cache:"no-store"
+    });
+
+    if(!response.ok){
+      throw new Error("Game feed request failed: " + response.status);
+    }
+
+    const xmlText = await response.text();
+
+    const newGames = parseXML(xmlText);
+
+    if(!newGames.length){
+      throw new Error("No games found in GamePix feed.");
+    }
+
+    /*
+      Deduplicate games.
+    */
+
+    const map = new Map();
+
+    [...games,...newGames].forEach(game=>{
+      map.set(game.id,game);
+    });
+
+    games = [...map.values()];
+
+    currentPage = page;
+
+    buildCategories();
+    applyFilters();
+
+    $("gameCount").textContent = games.length;
+
+    $("resultText").textContent =
+      games.length + " games available";
+
+  }catch(error){
+
+    console.error(error);
+
+    if(!games.length){
+
+      $("gamesGrid").innerHTML = `
+        <div class="error-box">
+          <strong>Games could not be loaded.</strong>
+          <br><br>
+          Your GamePix feed may be blocking direct browser requests
+          because of CORS restrictions.
+          <br><br>
+          The NEXTPLAY interface is working correctly, but a server-side
+          proxy is required if the feed does not allow browser access.
+        </div>
+      `;
+
+      $("gameCount").textContent = "—";
+      $("resultText").textContent = "Feed connection unavailable";
+
+    }else{
+
+      toast("More games could not be loaded.");
+
+    }
+
+  }finally{
+
+    isLoading = false;
+
+  }
+
+}
+
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+function buildCategories(){
+
+  const container = $("categoryTabs");
+
+  const categories = [
+    ...new Set(
+      games
+        .map(game => game.category)
+        .filter(Boolean)
+        .map(category => category.trim())
+    )
+  ].sort();
+
+  container.innerHTML = `
+    <button
+      class="tab ${currentCategory==="all"?"active":""}"
+      data-category="all">
+      All
+    </button>
+  `;
+
+  categories.slice(0,20).forEach(category=>{
+
+    const button = document.createElement("button");
+
+    button.className =
+      "tab " +
+      (currentCategory === category ? "active" : "");
+
+    button.dataset.category = category;
+
+    button.textContent = category;
+
+    container.appendChild(button);
+
+  });
+
+}
+
+
+/* =========================================================
+   FILTER ENGINE
+   ========================================================= */
+
+function applyFilters(){
+
+  let list = [...games];
+
+  const search =
+    $("searchInput").value
+      .trim()
+      .toLowerCase();
+
+  if(search){
+
+    list = list.filter(game =>
+
+      game.title.toLowerCase().includes(search) ||
+
+      game.category.toLowerCase().includes(search) ||
+
+      game.description.toLowerCase().includes(search)
+
+    );
+
+  }
+
+  if(currentCategory !== "all"){
+
+    list = list.filter(
+      game => game.category === currentCategory
+    );
+
+  }
+
+  if(currentFilter === "liked"){
+
+    list = list.filter(game =>
+      liked.includes(game.id)
+    );
+
+  }
+
+  if(currentFilter === "recent"){
+
+    const recentMap =
+      new Map(
+        recent.map((id,index)=>[id,index])
+      );
+
+    list = list
+      .filter(game=>recentMap.has(game.id))
+      .sort(
+        (a,b)=>
+          recentMap.get(a.id) -
+          recentMap.get(b.id)
+      );
+
+  }
+
+  const sort =
+    $("sortSelect").value;
+
+  if(sort === "az"){
+
+    list.sort((a,b)=>
+      a.title.localeCompare(b.title)
+    );
+
+  }
+
+  if(sort === "za"){
+
+    list.sort((a,b)=>
+      b.title.localeCompare(a.title)
+    );
+
+  }
+
+  if(sort === "likes"){
+
+    list.sort((a,b)=>
+      Number(liked.includes(b.id)) -
+      Number(liked.includes(a.id))
+    );
+
+  }
+
+  filteredGames = list;
+
+  renderGames();
+
+}
+
+
+/* =========================================================
+   GAME CARD
+   ========================================================= */
+
+function renderGames(){
+
+  const grid = $("gamesGrid");
+
+  if(!filteredGames.length){
+
+    grid.innerHTML = `
+      <div class="empty">
+        No games found for your current filter.
+      </div>
+    `;
+
+    $("resultText").textContent =
+      "No matching games";
+
+    return;
+  }
+
+  $("resultText").textContent =
+    filteredGames.length +
+    " game" +
+    (filteredGames.length === 1 ? "" : "s") +
+    " found";
+
+  grid.innerHTML = "";
+
+  filteredGames.forEach(game=>{
+
+    const card =
+      document.createElement("article");
+
+    card.className = "game";
+
+    const isLiked =
+      liked.includes(game.id);
+
+    const image =
+      game.image &&
+      /^https?:\/\//i.test(game.image)
+        ? game.image
+        : "";
+
+    card.innerHTML = `
+
+      <div class="game-cover">
+
+        ${
+          image
+
+          ?
+
+          `<img
+             src="${escapeHTML(image)}"
+             alt="${escapeHTML(game.title)}"
+             loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+           >
+           <div
+             class="cover-fallback"
+             style="display:none">
+             <span class="cover-letter">
+               NP
+             </span>
+             <strong>
+               ${escapeHTML(game.title)}
+             </strong>
+             <small>
+               ${escapeHTML(game.category)}
+             </small>
+           </div>`
+
+          :
+
+          `<div class="cover-fallback">
+             <span class="cover-letter">
+               NP
+             </span>
+             <strong>
+               ${escapeHTML(game.title)}
+             </strong>
+             <small>
+               ${escapeHTML(game.category)}
+             </small>
+           </div>`
+        }
+
+        <button
+          class="like ${isLiked ? "liked" : ""}"
+          title="Like game"
+          onclick="event.stopPropagation();toggleLike('${escapeJS(game.id)}')">
+          ${isLiked ? "♥" : "♡"}
+        </button>
+
+      </div>
+
+      <div class="game-info">
+
+        <div class="game-title">
+          ${escapeHTML(game.title)}
+        </div>
+
+        <div class="game-meta">
+          <span>
+            ${escapeHTML(game.category)}
+          </span>
+
+          <span>
+            ${isLiked ? "Liked" : "Game"}
+          </span>
+        </div>
+
+        <button
+          class="play-mini"
+          onclick="playGame('${escapeJS(game.id)}')">
+          Play Now
+        </button>
+
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================================================
+   LIKE
+   ========================================================= */
+
+function toggleLike(id){
+
+  if(liked.includes(id)){
+
+    liked =
+      liked.filter(item=>item!==id);
+
+    toast("Removed from liked games.");
+
+  }else{
+
+    liked.push(id);
+
+    toast("Game added to liked games.");
+
+  }
+
+  storage.set("nextplay_liked",liked);
+
+  updateStats();
+
+  applyFilters();
+
+}
+
+
+/* =========================================================
+   PLAY GAME
+   ========================================================= */
+
+function playGame(id){
+
+  const game =
+    games.find(item=>item.id===id);
+
+  if(!game || !game.url){
+
+    toast("Game URL unavailable.");
+
+    return;
+  }
+
+  /*
+    Recent games:
+    newest first, maximum 20.
+  */
+
+  recent =
+    [id,...recent.filter(item=>item!==id)]
+      .slice(0,20);
+
+  storage.set("nextplay_recent",recent);
+
+  /*
+    Player rewards.
+  */
+
+  stats.xp += 10;
+  stats.coins += 1;
+
+  updateStats();
+
+  $("playerTitle").textContent =
+    game.title;
+
+  $("gameFrame").src =
+    game.url;
+
+  $("playerOverlay")
+    .classList.add("show");
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+
+/* =========================================================
+   CLOSE PLAYER
+   ========================================================= */
+
+function closePlayer(){
+
+  $("playerOverlay")
+    .classList.remove("show");
+
+  $("gameFrame").src =
+    "about:blank";
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+   ========================================================= */
+
+function fullscreenGame(){
+
+  const frame =
+    $("gameFrame");
+
+  if(frame.requestFullscreen){
+
+    frame.requestFullscreen();
+
+  }else{
+
+    toast("Fullscreen is not supported here.");
+
+  }
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+$("searchInput")
+  .addEventListener("input",()=>{
+    applyFilters();
+  });
+
+
+/* =========================================================
+   CATEGORY BUTTONS
+   ========================================================= */
+
+$("categoryTabs")
+  .addEventListener("click",event=>{
+
+    const button =
+      event.target.closest("[data-category]");
+
+    if(!button) return;
+
+    currentCategory =
+      button.dataset.category;
+
+    document
+      .querySelectorAll("#categoryTabs .tab")
+      .forEach(tab=>{
+        tab.classList.toggle(
+          "active",
+          tab === button
+        );
+      });
+
+    applyFilters();
+
+  });
+
+
+/* =========================================================
+   MAIN FILTER TABS
+   ========================================================= */
+
+document
+  .querySelector(".tabs")
+  .addEventListener("click",event=>{
+
+    const button =
+      event.target.closest("[data-filter]");
+
+    if(!button) return;
+
+    currentFilter =
+      button.dataset.filter;
+
+    document
+      .querySelectorAll(
+        ".tabs .tab[data-filter]"
+      )
+      .forEach(tab=>{
+        tab.classList.toggle(
+          "active",
+          tab === button
+        );
+      });
+
+    applyFilters();
+
+  });
+
+
+/* =========================================================
+   SORT
+   ========================================================= */
+
+$("sortSelect")
+  .addEventListener("change",applyFilters);
+
+
+/* =========================================================
+   NAV
+   ========================================================= */
+
+function scrollToGames(){
+
+  $("gamesSection")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   GOOGLE LOGIN UI
+   ========================================================= */
+
+function googleLogin(){
+
+  toast(
+    "Google Login UI is ready. Connect Google OAuth to activate real accounts."
+  );
+
+}
+
+
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
+
+function showLeaderboard(){
+
+  const section =
+    $("leaderboardSection");
+
+  section.style.display = "block";
+
+  section.scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+let toastTimer;
+
+function toast(message){
+
+  const box =
+    $("toast");
+
+  box.textContent =
+    message;
+
+  box.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(()=>{
+      box.classList.remove("show");
+    },2800);
+
+}
+
+
+/* =========================================================
+   ESCAPE HELPERS
+   ========================================================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function escapeJS(value){
+
+  return String(value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,"\\n")
+    .replace(/\r/g,"\\r");
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+document.addEventListener("keydown",event=>{
+
+  if(event.key === "Escape"){
+
+    closePlayer();
+
+  }
+
+});
+
+
+/* =========================================================
+   OVERLAY CLICK
+   ========================================================= */
+
+$("playerOverlay")
+  .addEventListener("click",event=>{
+
+    if(event.target === $("playerOverlay")){
+
+      closePlayer();
+
+    }
+
+  });
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+updateStats();
+
+loadGames(1);
+
+
+/*
+  Try the next GamePix page automatically after the first
+  page has loaded. This expands the catalog when the feed
+  permits browser access.
+*/
+
+setTimeout(()=>{
+  if(games.length){
+    loadGames(2);
+  }
+},1800);
+
+</script>
+
+</body>
+</html>
